@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Sekolah;
 use Illuminate\Support\Facades\Route;
-use app\models\post;
-use Illuminate\Routing\RouteRegistrar;
+use App\Http\Controllers\SekolahController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,7 @@ use Illuminate\Routing\RouteRegistrar;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [ SekolahController::class, 'index']);
 
 Route::get('/home', function () {
     return view('home', [
@@ -24,28 +23,7 @@ Route::get('/home', function () {
     ]);
 });
 
-Route::get('/list-sekolah', function () {
-    
-$list_sekolah = [
-    [
-        "nama" => "SMPN 7 Distrik 6",
-        "slug" => "sekolah_1",
-        "lokasi" => "distrik 6",
-        "info" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, ratione delectus magni voluptates eum itaque maxime dicta sed natus vel dolores, fugit quo tempore a. At, repellendus facere? Unde dolor cum animi. Quis, quaerat voluptatibus? Impedit aperiam repellat est aliquid quidem enim. Praesentium voluptas iste esse totam eaque veniam eum delectus alias ex illum cumque minus magnam facilis minima, exercitationem aliquam quo accusantium, nisi commodi porro voluptatem, inventore possimus debitis. Esse voluptatibus harum, quo dolorem deserunt tenetur rem laborum distinctio repellat facere natus molestiae aliquam perferendis explicabo magnam quibusdam dignissimos ad quos, animi rerum voluptatem quidem fugit consectetur nisi. Magni?",
-    ],
-    [
-        "nama" => "SMP NUSA ",
-        "slug" => "sekolah_2",
-        "lokasi" => "distrik 7",
-        "info" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, ratione delectus magni voluptates eum itaque maxime dicta sed natus vel dolores, fugit quo tempore a. At, repellendus facere? Unde dolor cum animi. Quis, quaerat voluptatibus? Impedit aperiam repellat est aliquid quidem enim. Praesentium voluptas iste esse totam eaque veniam eum delectus alias ex illum cumque minus magnam facilis minima, exercitationem aliquam quo accusantium, nisi commodi porro voluptatem, inventore possimus debitis. Esse voluptatibus harum, quo dolorem deserunt tenetur rem laborum distinctio repellat facere natus molestiae aliquam perferendis explicabo magnam quibusdam dignissimos ad quos, animi rerum voluptatem quidem fugit consectetur nisi. Magni?",
-    ]
-    ];
-
-    return view('list-sekolah', [
-        "title" => "list-sekolah",
-        "list" => $list_sekolah
-    ]);
-});
+Route::get('/list-sekolah', [ SekolahController::class, 'list']);
 
 Route::get('/siswa', function () {
     return view('siswa', [
@@ -55,31 +33,5 @@ Route::get('/siswa', function () {
 
 
 //halaman single post
-Route::get('sekolah/{slug}' , function($slug) {
-    $list_sekolah = [
-        [
-            "nama" => "SMPN 7 Distrik 6",
-            "slug" => "sekolah_1",
-            "lokasi" => "distrik 6",
-            "info" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, ratione delectus magni voluptates eum itaque maxime dicta sed natus vel dolores, fugit quo tempore a. At, repellendus facere? Unde dolor cum animi. Quis, quaerat voluptatibus? Impedit aperiam repellat est aliquid quidem enim. Praesentium voluptas iste esse totam eaque veniam eum delectus alias ex illum cumque minus magnam facilis minima, exercitationem aliquam quo accusantium, nisi commodi porro voluptatem, inventore possimus debitis. Esse voluptatibus harum, quo dolorem deserunt tenetur rem laborum distinctio repellat facere natus molestiae aliquam perferendis explicabo magnam quibusdam dignissimos ad quos, animi rerum voluptatem quidem fugit consectetur nisi. Magni?",
-        ],
-        [
-            "nama" => "SMP NUSA ",
-            "slug" => "sekolah_2",
-            "lokasi" => "distrik 7",
-            "info" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, ratione delectus magni voluptates eum itaque maxime dicta sed natus vel dolores, fugit quo tempore a. At, repellendus facere? Unde dolor cum animi. Quis, quaerat voluptatibus? Impedit aperiam repellat est aliquid quidem enim. Praesentium voluptas iste esse totam eaque veniam eum delectus alias ex illum cumque minus magnam facilis minima, exercitationem aliquam quo accusantium, nisi commodi porro voluptatem, inventore possimus debitis. Esse voluptatibus harum, quo dolorem deserunt tenetur rem laborum distinctio repellat facere natus molestiae aliquam perferendis explicabo magnam quibusdam dignissimos ad quos, animi rerum voluptatem quidem fugit consectetur nisi. Magni?",
-        ]
-        ];
-    
-        $info_sekolah = [];
-    foreach ($list_sekolah as $list) {
-        if ($list["slug"] == $slug) {
-            $info_sekolah = $list;  
-        } 
-    }
+Route::get('sekolah/{sekolah:slug}' , [ SekolahController::class, 'info_sekolah']);
 
-    return view('sekolah' , [
-        "title" => "info sekolah",
-        "data" => $info_sekolah
-    ]);
-});
